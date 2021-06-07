@@ -222,8 +222,8 @@ namespace MonkeyPiracy
 
         private void Form_Load(object sender, EventArgs e)
         {
-            pictureBoxDown.Image = FixedSize(listBottomDial[hScrollBarDown.Value], listBottomDial[hScrollBarDown.Value].Width * 2, listBottomDial[hScrollBarDown.Value].Height * 2);
-            pictureBoxUp.Image = FixedSize(listUpDial[hScrollBarUp.Value], listUpDial[hScrollBarUp.Value].Width * 2, listUpDial[hScrollBarUp.Value].Height * 2);
+            pictureBoxDown.Image = FixedSize(listBottomDial[hScrollBarDown.Value], listBottomDial[hScrollBarDown.Value].Width * 2, (int)(listBottomDial[hScrollBarDown.Value].Height * 2.4));
+            pictureBoxUp.Image = FixedSize(listUpDial[hScrollBarUp.Value], listUpDial[hScrollBarUp.Value].Width * 2, (int)(listUpDial[hScrollBarUp.Value].Height * 2.4));
 
             pictureMixDown.Image = FixedSize(listDownMix[hScrollBarMixDown.Value], listDownMix[hScrollBarMixDown.Value].Width * 2, listDownMix[hScrollBarMixDown.Value].Height * 2);
             pictureMixUp.Image = FixedSize(listUpMix[hScrollBarMixUp.Value], listUpMix[hScrollBarMixUp.Value].Width * 2, listUpMix[hScrollBarMixUp.Value].Height * 2);
@@ -297,7 +297,7 @@ namespace MonkeyPiracy
             PictureBox pictureBox = (PictureBox)scrollbar.Tag;
             Image[] list = (Image[])pictureBox.Tag;
 
-            pictureBox.Image = FixedSize(list[scrollbar.Value], list[scrollbar.Value].Width * 2, list[scrollbar.Value].Height * 2);
+            pictureBox.Image = FixedSize(list[scrollbar.Value], list[scrollbar.Value].Width * 2, (int)(list[scrollbar.Value].Height * 2.4));
             PopulateDate();
         }
 
@@ -321,22 +321,22 @@ namespace MonkeyPiracy
             int sourceHeight = imgPhoto.Height;
             float nPercentW = Width / (float)sourceWidth;
             float nPercentH = Height / (float)sourceHeight;
-            float nPercent;
+            //float nPercent;
 
-            if (nPercentH < nPercentW)
-                nPercent = nPercentH;
-            else
-                nPercent = nPercentW;
+            //if (nPercentH < nPercentW)
+            //    nPercent = nPercentH;
+            //else
+            //    nPercent = nPercentW;
 
-            int destWidth = (int)(sourceWidth * nPercent);
-            int destHeight = (int)(sourceHeight * nPercent);
+            int destWidth = (int)(sourceWidth * nPercentW);
+            int destHeight = (int)(sourceHeight * nPercentH);
 
             Bitmap bmPhoto = new Bitmap(destWidth, destHeight, PixelFormat.Format32bppPArgb);
             bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
 
             Graphics grPhoto = Graphics.FromImage(bmPhoto);
             grPhoto.Clear(Color.Transparent);
-            grPhoto.InterpolationMode = InterpolationMode.Default;
+            grPhoto.InterpolationMode = InterpolationMode.Low;
 
             grPhoto.DrawImage(imgPhoto,
                 new Rectangle(0, 0, destWidth, destHeight),
